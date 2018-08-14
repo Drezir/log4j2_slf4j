@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- monitorInterval checks for file changes every 30 seconds -->
+<!-- status logs log4j2 event into console -->
+<Configuration monitorInterval="30" status="warn" >
+    <!-- see filters and their different scopes -->
+    <RegexFilter regex="Fuck.*" onMatch="DENY" onMismatch="ACCEPT"/>
+    <Appenders>
+        <!-- see other appender types also -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} $${env:USER:-jdoe} - %msg%n"/>
+        </Console>
+        <File name="file" fileName="output.html">
+            <HTMLLayout title="Hello World" locationInfo="true" charset="UTF-8"/>
+            <!-- see other layouts also -->
+        </File>
+    </Appenders>
+    <Loggers>
+        <!-- Logger or AsyncLogger -->
+        <Logger name="basic" level="trace"
+                additivity="false"> <!-- additivity=true -> writes log twice -->
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="file"/>
+        </Logger>
+        <!--name is name of the package to be registered by the logger  -->
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>
